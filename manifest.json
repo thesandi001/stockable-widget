@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+
+  "name": "stockable",
+  "description": "Get a stock widget for basic stock details automatically from browser",
+  "version": "1.1.1",
+
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_icon" : "images/stock_widget_icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/",
+    "<all_urls>",
+    "debugger",
+    "storage"
+  ],
+  // "content_security_policy": "script-src 'self' 'unsafe-inline' https://*.smallcase.com;",  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["app/scrapper.js"]
+    }
+  ]
+}
