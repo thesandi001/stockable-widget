@@ -29,7 +29,7 @@
                                 <i class='glyphicon glyphicon-plus'></i>
                                 </a>&nbsp;&nbsp; -->
                                 <input type='checkbox' ng-model='todo.completed' ng-click='toggleCompleted()'/>&nbsp;&nbsp;
-                                <span tooltips tooltip-side="bottom" tooltip-size="large" tooltip-class="tooltip-box" tooltip-template="{{ todo.name }}">{{ todo.content }}</span>
+                                <span tooltips tooltip-side="bottom" tooltip-size="large" tooltip-class="tooltip-box" tooltip-template="{{ todo.name }}" ng-class="(todo.content == loadValue)? 'stockable-primary': ''">{{ todo.content }}</span>
                                 <!-- <a class='btn-remove-todo pull-right' title="Remove from list" ng-click='remove(todo)'>
                                 <i class='glyphicon glyphicon-remove'></i>
                                 </a> -->
@@ -42,7 +42,7 @@
                                 <input type='checkbox' ng-model='todo.completed' ng-click='toggleCompleted()'/>&nbsp;&nbsp;
                                 
                                 <!-- <span data-toggle="tooltip" title="{{ todo.name }}">{{ todo.content }}</span> -->
-                                <span tooltips tooltip-side="bottom" tooltip-size="large" tooltip-class="tooltip-box" tooltip-template="{{ todo.name }}">{{ todo.content }}</span>
+                                <span tooltips tooltip-side="bottom" tooltip-size="large" tooltip-class="tooltip-box" tooltip-template="{{ todo.name }}" ng-class="(todo.content == loadValue)? 'stockable-primary': ''">{{ todo.content }}</span>
                                 <!-- <a href="#" tooltips tooltip-side="bottom" tooltip-template="tooltip">Tooltip me</a> -->
                                 
                                 <a class='btn-remove-todo pull-right' title="Remove from list" ng-click='remove(todo)'>
@@ -67,11 +67,20 @@
                 </div>
                 <div class="col-xs-8" style="margin-left: -7px;">                    
                     <div class="row margin-br">
-                        <div class="col-xs-12">
+                        <div class="col-xs-8">
                             <br>
                             <form ng-submit="load(loadValue)">
                                 <input type="text" class="form-control" ng-model="loadValue" placeholder="Search with nse ticker" autofocus="true">
                             </form>
+                        </div>
+                        <div class="col-xs-4" style="margin-top: 25px;">
+                            
+                            <span ng-if="nifty.live.price" ng-class="(nifty.live.pnl>=0)?'arrow-profit':'arrow-loss'"></span>
+
+                            <span class="font-size-xxs" ng-if="nifty.live.price" ng-class="(nifty.live.pnl>=0)?'font-color-green':'font-color-red'" tooltips tooltip-side="bottom" tooltip-size="small" tooltip-template="{{ nifty.live.pnl | number : 2 }}">{{ nifty.live.pnl_percent | number : 2 }}%</span>&nbsp;
+
+                            <span class="font-size-xl" ng-if="nifty.live.price" ng-class="(nifty.live.pnl>=0)?'font-color-green':'font-color-red'" tooltips tooltip-side="bottom" tooltip-size="small" tooltip-template="{{ 'Last Close<br>' + (nifty.live.last_close | number : 2) }}">{{ nifty.live.price | number : 2 }}</span>
+
                         </div>
                     </div>
                     
@@ -220,7 +229,7 @@
 
                                 <div class="row widget-bottom-box">
                                     <div class="col-xs-6 text-left">
-                                        <a href="https://www.smallcase.com" target="_blank"><img src="https://www.smallcase.com/stock-hover/images/favicon.ico" style="height: 14px;">&nbsp;&nbsp;smallcase</a>
+                                        <a href="https://www.smallcase.com/discover?stock={{ widgetSrc.sid }}&sName={{ widgetSrc.stock.info.ticker }}" target="_blank"><img src="https://www.smallcase.com/stock-hover/images/favicon.ico" style="height: 14px;">&nbsp;&nbsp;smallcase</a>
                                     </div>
                                     <div class="col-xs-6 text-right">
                                         <a href='https://screener.smallcase.com/?src=widget&query={"subindustry":"{{ widgetSrc.stock.info.sector }}"}&stock={{ widgetSrc.stock.info.name }}' target='_blank'>Compare with peers</a>

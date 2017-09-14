@@ -1585,8 +1585,7 @@ angular.module('app').controller('todoCtrl', function ($scope, $http, todoStorag
     $scope.loading = false;
     var refreshRate = 3; // in seconds
 
-    var getInfoAndHistoricalUrl = 'https://api.smallcase.com/external/market/stocks/getInfoAndHistorical?hash=0fadff0c758e206284641f2026e726d408bd456d7518fe5a7dfa0afe12492b81&broker=kite&timestamp=1503892162000&ticker=';
-
+    var getInfoAndHistoricalUrl = 'https://api.smallcase.com/external/market/stocks/getInfoAndHistorical?hash=18486851024ad8e3b8d360eadaaab6d93e393299bab27ef6d2eb76de40cf860e&broker=kite&timestamp=1505286461000&ticker=';    
     var livePriceUrl = 'http://finance.google.com/finance/info?q=NSE:';
     var createBasketUrl = 'https://www.smallcase.com/create?';
 
@@ -1716,29 +1715,33 @@ angular.module('app').controller('todoCtrl', function ($scope, $http, todoStorag
                 pnl: res.c_fix.replace(',',''),
                 pnl_percent: res.cp.replace(',',''),
                 last_close: res.pcls_fix.replace(',','')
-            };
-            // c: "+3.60"
-            // c_fix: "3.60"
-            // ccol: "chg"
-            // cp: "1.08"
-            // cp_fix: "1.08"
-            // e: "NSE"
-            // id: "769779458292200"
-            // l: "337.50"
-            // l_cur: "₹337.50"
-            // l_fix: "337.50"
-            // lt: "Aug 24, 3:30PM GMT+5:30"
-            // lt_dts: "2017-08-24T15:30:00Z"
-            // ltt: "3:30PM GMT+5:30"
-            // pcls_fix: "333.9"
-            // s: "0"
-            // t: "WONDERLA"
+            };            
+        }, function(error) {});        
+    }
+
+    $scope.loadLiveNifty = function() {
+
+        var url = livePriceUrl + 'NIFTY%2050';
+        var config = {};        
+        $http.get(url, config).then(function(response) {
+            var res = JSON.parse(response.data.substring(3))[0];
+            $scope.nifty = {};
+            $scope.nifty.live = {
+                price: res.l.replace(',',''),
+                pnl: res.c_fix.replace(',',''),
+                pnl_percent: res.cp.replace(',',''),
+                last_close: res.pcls_fix.replace(',','')
+            };            
         }, function(error) {});        
     }
 
     setInterval(function() {
         if($scope.loadValue) $scope.loadLive($scope.loadValue);
     }, refreshRate*1000);
+
+    setInterval(function() {
+        $scope.loadLiveNifty();        
+    }, 1000);
 
     $scope.readMore = function() {
         $scope.widgetSrc.stock.info.description = $scope.widgetSrc.stock.info.descriptionCopy;

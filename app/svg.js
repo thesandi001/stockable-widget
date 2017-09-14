@@ -7,7 +7,7 @@ function generateCoords(historical) {
         if (historical[i].price > max) max = historical[i].price;
     }
     
-    var dx = 51; // 1st to 52nd week time axis (52-1)
+    var dx = historical.length; // 1st to 52nd week time axis (52-1)
     var dy = max - min;
     var chart_height = 70; // px
     var chart_width = 180; // px
