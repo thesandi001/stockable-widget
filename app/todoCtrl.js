@@ -1585,7 +1585,7 @@ angular.module('app').controller('todoCtrl', function ($scope, $http, todoStorag
     $scope.loading = false;
     var refreshRate = 3; // in seconds
 
-    var getInfoAndHistoricalUrl = 'https://api.smallcase.com/external/market/stocks/getInfoAndHistorical?hash=18486851024ad8e3b8d360eadaaab6d93e393299bab27ef6d2eb76de40cf860e&broker=kite&timestamp=1505286461000&ticker=';    
+    var getInfoAndHistoricalUrl = 'https://api.smallcase.com/external/market/stocks/getInfoAndHistorical?hash=eac17ca1ac7985c97bb859df011dba4d4682dff937e23468de308672238beced&broker=kite&timestamp=1505479660000&ticker=';
     var livePriceUrl = 'http://finance.google.com/finance/info?q=NSE:';
     var createBasketUrl = 'https://www.smallcase.com/create?';
 

@@ -107,17 +107,16 @@ a:hover { text-decoration: none; }
 
 .stock-widget-inner { 
 	background: #fafafa;
-	height: 355px; /*300px;*/
+	height: 355px; /*300px;*/	
+	padding:10px;
 	overflow-x: hidden;
-	overflow-y: scroll; 
-	border: solid thin #efefef; 
-	padding:10px; 
-	/*overflow: hidden;*/
+	overflow-y: scroll;
+	/*border: solid thin #efefef;
 	border-radius: 3px;
-	box-shadow: 0px 0px 3px #dfdfdf;
+	box-shadow: 0px 0px 3px #dfdfdf;*/
 }
 
-.widget-top-box { border-bottom: solid thin #efefef; height: 60px; padding: 5px; }
+.widget-top-box { height: 60px; padding: 5px; }
 .widget-middle-box { min-height: 210px; background: #ffffff; padding: 10px; }
 .widget-bottom-box { height: 1px; padding: 10px 5px; font-size: 14px; }
 
@@ -165,15 +164,15 @@ a:hover { text-decoration: none; }
 }
 
 .left-panel-scroll {
-	height: 275px;
-	overflow-y: scroll;
+	height: 275px;	
+	overflow-y: scroll;	
 	border-top: solid thin #efefef;
 	border-bottom: solid thin #efefef;
 }
 
 .tooltip-box { 
-	left: -133px !important;
-	width: 200px !important; 	
+	left: -123px !important;
+	width: 180px !important; 	
 	font-size: 9px; 
 	line-height: 1.6em; 
 	/*padding: 5px !important; */
