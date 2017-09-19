@@ -28,7 +28,7 @@
                                 <!-- <a class='pull-left' title="Add to basket" ng-click='addTobasket(todo)'>
                                 <i class='glyphicon glyphicon-plus'></i>
                                 </a>&nbsp;&nbsp; -->
-                                <input type='checkbox' ng-model='todo.completed' ng-click='toggleCompleted()'/>&nbsp;&nbsp;
+                                <!-- <input type='checkbox' ng-model='todo.completed' ng-click='toggleCompleted()'/>&nbsp;&nbsp; -->
                                 <span tooltips tooltip-side="bottom" tooltip-size="large" tooltip-class="tooltip-box" tooltip-template="{{ todo.name }}" ng-class="(todo.content == loadValue)? 'stockable-primary': ''">{{ todo.content }}</span>
                                 <!-- <a class='btn-remove-todo pull-right' title="Remove from list" ng-click='remove(todo)'>
                                 <i class='glyphicon glyphicon-remove'></i>
@@ -39,7 +39,7 @@
                                 <!-- <a class='pull-left' title="Add to basket" ng-click='addTobasket(todo)'>
                                 <i class='glyphicon glyphicon-plus'></i>
                                 </a>&nbsp;&nbsp; -->
-                                <input type='checkbox' ng-model='todo.completed' ng-click='toggleCompleted()'/>&nbsp;&nbsp;
+                                <!-- <input type='checkbox' ng-model='todo.completed' ng-click='toggleCompleted()'/>&nbsp;&nbsp; -->
                                 
                                 <!-- <span data-toggle="tooltip" title="{{ todo.name }}">{{ todo.content }}</span> -->
                                 <span tooltips tooltip-side="bottom" tooltip-size="large" tooltip-class="tooltip-box" tooltip-template="{{ todo.name }}" ng-class="(todo.content == loadValue)? 'stockable-primary': ''">{{ todo.content }}</span>
@@ -51,29 +51,30 @@
                             </div>
 
                             <div class="list-el font-size-xs margin-negetive-left" ng-class="(tabValue == 'history' && todoList.length>1)?'show':'hide'">
-                                <div class="col-xs-4 text-center font-color-light-grey" ng-class="(tabValue == 'history' && todoList.length>1)?'show':'hide'" ng-click='removeAll()'>remove all</div>
-                                <div class="col-xs-4 text-center font-color-light-grey" ng-class="(tabValue == 'history' && todoList.length>1)?'show':'hide'" ng-click='selectAll()'>select all</div>
-                                <div class="col-xs-4 text-center font-color-light-grey" ng-class="(tabValue == 'history' && (todoList | filter: {completed:true}).length)?'show':'hide'" ng-click='clearSelection()'>clear selection</div>
+                                <div class="col-xs-12 text-center font-color-light-grey" ng-class="(tabValue == 'history' && todoList.length>1)?'show':'hide'" ng-click='removeAll()'>remove all</div>
+                                <!-- <div class="col-xs-4 text-center font-color-light-grey" ng-class="(tabValue == 'history' && todoList.length>1)?'show':'hide'" ng-click='selectAll()'>select all</div>
+                                <div class="col-xs-4 text-center font-color-light-grey" ng-class="(tabValue == 'history' && (todoList | filter: {completed:true}).length)?'show':'hide'" ng-click='clearSelection()'>clear selection</div> -->
                                 <div class="clearfix"></div>
                             </div>
 
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-xs-12 text-center"><br>
                                 <input type="submit" class="btn btn-100 btn-info" ng-class="(( tabValue == 'current' && (currentList | filter: {completed:true}).length > 1) || ( tabValue == 'history' && (todoList | filter: {completed:true}).length > 1))?'':'disabled'" ng-click="addToBasket()" value="Create smallcase">
                             </div>
-                        </div>                        
+                        </div> -->
                     </div>
                 </div>
-                <div class="col-xs-8" style="margin-left: -7px;">                    
+                <div class="col-xs-8" style="margin-left: -7px;">
+                    
                     <div class="row margin-br">
-                        <div class="col-xs-8">
+                        <div class="col-xs-7">
                             <br>
                             <form ng-submit="load(loadValue)">
                                 <input type="text" class="form-control" ng-model="loadValue" placeholder="Search with nse ticker" autofocus="true">
                             </form>
                         </div>
-                        <div class="col-xs-4" style="margin-top: 25px;">
+                        <div class="col-xs-5" style="margin-top: 25px;">
                             
                             <span ng-if="nifty.live.price" ng-class="(nifty.live.pnl>=0)?'arrow-profit':'arrow-loss'"></span>
 
@@ -96,10 +97,10 @@
 
                                 <div class="row widget-top-box">
                                     <div class="col-xs-12">
-                                        <div class="name">{{ widgetSrc.stock.info.name }}<span class="ticker">&nbsp;&nbsp;{{ widgetSrc.stock.info.ticker }}</span></div>
+                                        <div class="name">{{ widgetSrc.name }}<span class="ticker">&nbsp;&nbsp;{{ widgetSrc.nse_code }}</span></div>
                                     </div>
                                     <div class="col-xs-12">
-                                        <span class="ticker">{{ widgetSrc.stock.gic.sector }} &rarr; {{ widgetSrc.stock.info.sector }}</span>
+                                        <span class="ticker">{{ widgetSrc.warehouse_set.industry }}</span>
                                     </div>                                    
                                 </div>
 
@@ -109,13 +110,13 @@
                                             <div class="col-xs-7">
                                                 <div class="bold margin-br">
                                                     <span class="font-size-xxs">MARKET CAP</span>
-                                                    <span class="font-size-m" ng-if="widgetSrc.stock.ratios.marketCap">
-                                                        {{ widgetSrc.stock.ratios.marketCap/10 | number : 2 }} 
-                                                        <span class="font-size-xxs" ng-if="widgetSrc.stock.ratios.marketCap/10 >= 20000">CR. (Large Cap)</span>
-                                                        <span class="font-size-xxs" ng-if="widgetSrc.stock.ratios.marketCap/10 < 20000 && widgetSrc.stock.ratios.marketCap/10 > 5000">CR. (Mid Cap)</span>
-                                                        <span class="font-size-xxs" ng-if="widgetSrc.stock.ratios.marketCap/10 < 5000">CR. (Small Cap)</span>
+                                                    <span class="font-size-m" ng-if="widgetSrc.warehouse_set.market_capitalization">
+                                                        {{ widgetSrc.warehouse_set.market_capitalization | number : 2 }} 
+                                                        <span class="font-size-xxs" ng-if="widgetSrc.warehouse_set.market_capitalization >= 20000">CR. (Large Cap)</span>
+                                                        <span class="font-size-xxs" ng-if="widgetSrc.warehouse_set.market_capitalization < 20000 && widgetSrc.warehouse_set.market_capitalization > 5000">CR. (Mid Cap)</span>
+                                                        <span class="font-size-xxs" ng-if="widgetSrc.warehouse_set.market_capitalization < 5000">CR. (Small Cap)</span>
                                                     </span>
-                                                    <span ng-if="!widgetSrc.stock.ratios.marketCap">N/A</span>
+                                                    <span ng-if="!widgetSrc.warehouse_set.market_capitalization">N/A</span>
                                                 </div>
                                             </div>
                                             
@@ -129,119 +130,132 @@
 
                                                 <span class="font-size-xxs" ng-if="widgetSrc.stock.live.price" ng-class="(widgetSrc.stock.live.pnl>=0)?'font-color-green':'font-color-red'" tooltips tooltip-side="bottom" tooltip-size="small" tooltip-template="{{ widgetSrc.stock.live.pnl | number : 2 }}">{{ widgetSrc.stock.live.pnl_percent | number : 2 }}%</span>&nbsp;
 
-                                                <span class="font-size-xl" ng-if="widgetSrc.stock.live.price" ng-class="(widgetSrc.stock.live.pnl>=0)?'font-color-green':'font-color-red'" tooltips tooltip-side="bottom" tooltip-size="small" tooltip-template="{{ 'Last Close<br>' + (widgetSrc.stock.live.last_close | number : 2) }}">{{ widgetSrc.stock.live.price | number : 2 }}</span>
+                                                <span class="font-size-xl font-color-green" ng-if="widgetSrc.warehouse_set.current_price" ng-class="(widgetSrc.stock.live.pnl>=0)?'font-color-green':'font-color-red'" tooltips tooltip-side="bottom" tooltip-size="small" tooltip-template="{{ 'Last Close<br>' + (widgetSrc.stock.live.last_close | number : 2) }}">{{ widgetSrc.warehouse_set.current_price | number : 2 }}</span>
 
                                             </div>
 
                                         </div>                                        
-                                        <div class="details margin-br">                                            
+                                        <!-- <div class="details margin-br">                                            
                                             {{ widgetSrc.stock.info.description }} <a href="#" ng-if="widgetSrc.stock.info.descriptionLengthExceeded" ng-click="readMore()">read more</a>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="col-xs-12">
                                         <div class="row">
-                                            <div class="col-xs-6">
-                                                <div class="row">
-                                                    <div class="col-xs-12">
-                                                        <div class="font-size-xxs" style="margin-bottom: 8px;">PRICE TREND - 1 YR</div>
-                                                        <span id="chart"></span>                                
+                                            <div class="col-xs-12">
+                                                
+                                                <div class="row margin-br">
+                                                    <div class="col-xs-3 text-left">
+                                                        <span class="font-size-xxs">52 WK HIGH</span><br>
+                                                        <span class="font-size-m">
+                                                            <span ng-if="widgetSrc.warehouse_set.high_price">{{ widgetSrc.warehouse_set.high_price | number : 2 }}</span>
+                                                            <span ng-if="!widgetSrc.warehouse_set.high_price">-</span>
+                                                        </span>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-xs-6 text-left">
+                                                    <div class="col-xs-3 text-center">
                                                         <span class="font-size-xxs">ROE</span><br>
                                                         <span class="font-size-m">
-                                                            <span ng-if="widgetSrc.stock.ratios.roe">{{ widgetSrc.stock.ratios.roe | number : 2 }}</span>
-                                                            <span ng-if="!widgetSrc.stock.ratios.roe">-</span>
+                                                            <span ng-if="widgetSrc.warehouse_set.return_on_equity" tooltips tooltip-side="bottom" tooltip-size="small" tooltip-template="{{ '5 YR ROE<br>' + (widgetSrc.warehouse_set.average_return_on_equity_5years | number : 2) }}">{{ widgetSrc.warehouse_set.return_on_equity | number : 2 }}</span>
+                                                            <span ng-if="!widgetSrc.warehouse_set.return_on_equity">-</span>
                                                         </span>
                                                     </div>
-                                                    <!-- <div class="col-xs-3 text-left">
-                                                        <span class="font-size-xxs">&beta;</span><br>
-                                                        <span class="font-size-m">2.4</span>
-                                                    </div> -->
-                                                    <div class="col-xs-6 text-left">
+                                                    <div class="col-xs-3 text-center">
+                                                        <span class="font-size-xxs">SALES GR.</span><br>
+                                                        <span class="font-size-m">
+                                                            <span ng-if="widgetSrc.warehouse_set.sales_growth" tooltips tooltip-side="bottom" tooltip-size="small" tooltip-template="{{ '5 YR SALES GROWTH<br>' + (widgetSrc.warehouse_set.sales_growth_5years | number : 2) }}">{{ widgetSrc.warehouse_set.sales_growth | number : 2 }}%</span>
+                                                            <span ng-if="!widgetSrc.warehouse_set.sales_growth">-</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xs-3 text-right">
+                                                        <span class="font-size-xxs">P/E</span><br>
+                                                        <span class="font-size-m">
+                                                            <span ng-if="widgetSrc.warehouse_set.price_to_earning">{{ widgetSrc.warehouse_set.price_to_earning | number : 2 }}</span>
+                                                            <span ng-if="!widgetSrc.warehouse_set.price_to_earning">-</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row margin-br">
+                                                    <div class="col-xs-3 text-left">
+                                                        <span class="font-size-xxs">52 WK LOW</span><br>
+                                                        <span class="font-size-m">
+                                                            <span ng-if="widgetSrc.warehouse_set.low_price">{{ widgetSrc.warehouse_set.low_price | number : 2 }}</span>
+                                                            <span ng-if="!widgetSrc.warehouse_set.low_price">-</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xs-3 text-center">
+                                                        <span class="font-size-xxs">DIV. YIELD</span><br>
+                                                        <span class="font-size-m">
+                                                            <span ng-if="widgetSrc.warehouse_set.dividend_yield">{{ widgetSrc.warehouse_set.dividend_yield  | number : 2 }}%</span>
+                                                            <span ng-if="!widgetSrc.warehouse_set.dividend_yield">-</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xs-3 text-center">
+                                                        <span class="font-size-xxs">PROFIT GR.</span><br>
+                                                        <span class="font-size-m">
+                                                            <span ng-if="widgetSrc.warehouse_set.profit_growth" tooltips tooltip-side="bottom" tooltip-size="small" tooltip-template="{{ '5 YR PROFIT GROWTH<br>' + (widgetSrc.warehouse_set.profit_growth_5years | number : 2) }}">{{ widgetSrc.warehouse_set.profit_growth | number : 2 }}%</span>
+                                                            <span ng-if="!widgetSrc.warehouse_set.profit_growth">-</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xs-3 text-right">
                                                         <span class="font-size-xxs">P/B</span><br>
                                                         <span class="font-size-m">
-                                                            <span ng-if="widgetSrc.stock.ratios.pb">{{ widgetSrc.stock.ratios.pb | number : 2 }}</span>
-                                                            <span ng-if="!widgetSrc.stock.ratios.pb">-</span>
+                                                            <span ng-if="widgetSrc.warehouse_set.book_value && widgetSrc.warehouse_set.current_price">{{ (widgetSrc.warehouse_set.current_price/widgetSrc.warehouse_set.book_value) | number : 2 }}</span>
+                                                            <span ng-if="!widgetSrc.warehouse_set.book_value || !widgetSrc.warehouse_set.current_price">-</span>
                                                         </span>
+                                                    </div>
+                                                </div>                                                
+                                            </div>                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="font-size-xxs" style="margin-bottom: 8px;">
+                                                    PRICE TREND - 
+                                                    <span class="clickable" ng-class="(chartPeriod=='months' && chartValue=='1')?'bold stockable-primary':''" ng-click="changeTimePeriod(widgetSrc.id,'months',1)">1MO</span> | 
+                                                    <span class="clickable" ng-class="(chartPeriod=='months' && chartValue=='3')?'bold stockable-primary':''" ng-click="changeTimePeriod(widgetSrc.id,'months',3)">3MO</span> | 
+                                                    <span class="clickable" ng-class="(chartPeriod=='months' && chartValue=='6')?'bold stockable-primary':''" ng-click="changeTimePeriod(widgetSrc.id,'months',6)">6MO</span> | 
+                                                    <span class="clickable" ng-class="(chartPeriod=='years' && chartValue=='1')?'bold stockable-primary':''" ng-click="changeTimePeriod(widgetSrc.id,'years',1)">1YR</span> | 
+                                                    <span class="clickable" ng-class="(chartPeriod=='years' && chartValue=='2')?'bold stockable-primary':''" ng-click="changeTimePeriod(widgetSrc.id,'years',2)">2YR</span> | 
+                                                    <span class="clickable" ng-class="(chartPeriod=='years' && chartValue=='3')?'bold stockable-primary':''" ng-click="changeTimePeriod(widgetSrc.id,'years',3)">3YR</span> | 
+                                                    <span class="clickable" ng-class="(chartPeriod=='years' && chartValue=='5')?'bold stockable-primary':''" ng-click="changeTimePeriod(widgetSrc.id,'years',5)">5YR</span> | 
+                                                    <span class="clickable" ng-class="(chartPeriod=='years' && chartValue=='11')?'bold stockable-primary':''" ng-click="changeTimePeriod(widgetSrc.id,'years',11)">MAX</span>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-9">
+                                                        <div class="chart-holder"><span id="chart"></span></div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <div class="text-right margin-br">
+                                                            <span class="font-size-xxs">RETURN</span><br>
+                                                            <span class="font-size-m">
+                                                                <span ng-if="widgetSrc.warehouse_set.period_return">{{ widgetSrc.warehouse_set.period_return | number : 2 }}%</span>
+                                                                <span ng-if="!widgetSrc.warehouse_set.period_return">-</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="text-right">
+                                                            <span class="font-size-xxs">HIGH/LOW</span><br>
+                                                            <span class="font-size-m">
+                                                                <span>
+                                                                    {{ widgetSrc.warehouse_set.period_high | number : 2 }}<br>
+                                                                    {{ widgetSrc.warehouse_set.period_low | number : 2 }}
+                                                                </span>                                                         
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-6">
-                                                <div class="row margin-br">
-                                                    <div class="col-xs-4 info-panel text-left">
-                                                        <span class="font-size-xxs">1 MO. RTN</span><br>
-                                                        <span class="font-size-l bold" ng-if="widgetSrc.stock.ratios['4wpct']" ng-class="(widgetSrc.stock.ratios['4wpct']>=0)?'font-color-green':'font-color-red'">{{ widgetSrc.stock.ratios['4wpct'] | number : 2 }}%</span>
-                                                        <span class="font-size-l bold" ng-if="!widgetSrc.stock.ratios['4wpct']">-</span>
-                                                    </div>
-                                                    <div class="col-xs-4 info-panel text-left"></div>
-                                                    <div class="col-xs-4 info-panel text-left">
-                                                        <span class="font-size-xxs">1 YR. RTN</span><br>
-                                                        <span class="font-size-l bold" ng-if="widgetSrc.stock.ratios['52wpct']" ng-class="(widgetSrc.stock.ratios['52wpct']>=0)?'font-color-green':'font-color-red'">{{ widgetSrc.stock.ratios['52wpct'] | number : 2 }}%</span>
-                                                        <span class="font-size-l bold" ng-if="!widgetSrc.stock.ratios['52wpct']">-</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row margin-br">
-                                                    <div class="col-xs-4 info-panel text-left">
-                                                        <span class="font-size-xxs">52 WK HIGH</span><br>
-                                                        <span class="font-size-m">
-                                                            <span ng-if="widgetSrc.stock.ratios['52wHigh']">{{ widgetSrc.stock.ratios['52wHigh'] | number : 2 }}</span>
-                                                            <span ng-if="!widgetSrc.stock.ratios['52wHigh']">-</span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-xs-4 info-panel text-left"></div>
-                                                    <div class="col-xs-4 info-panel text-left">
-                                                        <span class="font-size-xxs">52 WK LOW</span><br>
-                                                        <span class="font-size-m">
-                                                            <span ng-if="widgetSrc.stock.ratios['52wLow']">{{ widgetSrc.stock.ratios['52wLow'] | number : 2 }}</span>
-                                                            <span ng-if="!widgetSrc.stock.ratios['52wLow']">-</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="row margin-br">
-                                                    <div class="col-xs-5 info-panel text-left">
-                                                        <span class="font-size-xxs">P/E</span><br>
-                                                        <span class="font-size-m">
-                                                            <span ng-if="widgetSrc.stock.ratios.pe">{{ widgetSrc.stock.ratios.pe | number : 2 }}</span>
-                                                            <span ng-if="!widgetSrc.stock.ratios.pe">-</span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-xs-3 info-panel text-left">
-                                                        <span class="font-size-xxs italic">&beta;</span><br>
-                                                        <span class="font-size-m">
-                                                            <span ng-if="widgetSrc.stock.ratios.beta">{{ widgetSrc.stock.ratios.beta | number : 2 }}</span>
-                                                            <span ng-if="!widgetSrc.stock.ratios.beta">-</span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-xs-4 info-panel text-left">
-                                                        <span class="font-size-xxs">DIV. YIELD</span><br>
-                                                        <span class="font-size-m">
-                                                            <span ng-if="widgetSrc.stock.ratios.divYield">{{ widgetSrc.stock.ratios.divYield  | number : 2 }}%</span>
-                                                            <span ng-if="!widgetSrc.stock.ratios.divYield">-</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>                                            
-                                        </div>                                        
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row widget-bottom-box">
                                     <div class="col-xs-6 text-left">
-                                        <a href="https://www.smallcase.com/discover?stock={{ widgetSrc.sid }}&sName={{ widgetSrc.stock.info.ticker }}" target="_blank"><img src="https://www.smallcase.com/stock-hover/images/favicon.ico" style="height: 14px;">&nbsp;&nbsp;smallcase</a>
+                                        <a href='https://www.screener.in/company/{{ loadValue }}' target='_blank'><span class="font-color-white">more on {{ loadValue }} >></span></a>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <a href='https://screener.smallcase.com/?src=widget&query={"subindustry":"{{ widgetSrc.stock.info.sector }}"}&stock={{ widgetSrc.stock.info.name }}' target='_blank'>Compare with peers</a>
+                                        powered by <a href="hhttps://www.screener.in" target="_blank"><img src="https://www.screener.in/static/img/logo.png" style="height: 8px;"></a>
                                     </div>
                                 </div>
 
-                            </div>
-                            <!-- <iframe class="stock-widget" ng-class="(widgetUrl)?'show':'hide'" ng-src="widgetUrl"></iframe> -->
-                            <!-- <object class="stock-widget" ng-class="(widgetUrl)?'show':'hide'" data="{{ widgetUrl }}">
-                                <embed src="{{ widgetUrl }}"></embed>
-                                Error: Embedded data could not be displayed.
-                            </object> -->
+                            </div>                            
                         </div>
                     </div>
 

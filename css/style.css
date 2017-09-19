@@ -18,6 +18,7 @@ a:hover { text-decoration: none; }
 .font-size-xxl { font-size: 20px; }
 .font-size-xxxl { font-size: 24px; }
 
+.font-color-white { color: #ffffff; }
 .font-color-red { color: #ff4242; }
 .font-color-green { color: #42bb5c; }
 .font-color-grey { color: grey; }
@@ -107,18 +108,18 @@ a:hover { text-decoration: none; }
 
 .stock-widget-inner { 
 	background: #fafafa;
-	height: 355px; /*300px;*/	
-	padding:10px;
+	height: 360px;
+	padding: 0 10px;
 	overflow-x: hidden;
-	overflow-y: scroll;
-	/*border: solid thin #efefef;
+	overflow-y: hidden;	
+	border: solid thin #efefef;
 	border-radius: 3px;
-	box-shadow: 0px 0px 3px #dfdfdf;*/
+	box-shadow: 0px 0px 3px #dfdfdf;
 }
 
-.widget-top-box { height: 60px; padding: 5px; }
-.widget-middle-box { min-height: 210px; background: #ffffff; padding: 10px; }
-.widget-bottom-box { height: 1px; padding: 10px 5px; font-size: 14px; }
+.widget-top-box { height: 60px; padding: 10px; }
+.widget-middle-box { min-height: 235px; background: #ffffff; padding: 10px; }
+.widget-bottom-box { height: 35px; padding: 7px 10px; font-size: 11px; background: #666; color: #fff; }
 
 .widget-top-box .name {	
     max-width: 75%;
@@ -140,11 +141,14 @@ a:hover { text-decoration: none; }
     line-height: 1.6em;
 }
 
+.chart-holder {
+	width: 100%;
+	height: 100px;
+}
+
 .chart {
 	stroke-width: 2;	
-	stroke: #1eb7d5;
-	width:180px; 
-	height: 70px;	
+	stroke: #1eb7d5;	
 }
 
 .left-panel {
@@ -164,14 +168,14 @@ a:hover { text-decoration: none; }
 }
 
 .left-panel-scroll {
-	height: 275px;	
+	height: 335px;	
 	overflow-y: scroll;	
 	border-top: solid thin #efefef;
 	border-bottom: solid thin #efefef;
 }
 
 .tooltip-box { 
-	left: -123px !important;
+	left: -100px !important;
 	width: 180px !important; 	
 	font-size: 9px; 
 	line-height: 1.6em; 

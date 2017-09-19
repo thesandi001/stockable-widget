@@ -3,14 +3,14 @@ function generateCoords(historical) {
     max = 0;
 
     for (var i in historical) {
-        if (historical[i].price < min) min = historical[i].price;
-        if (historical[i].price > max) max = historical[i].price;
+        if (historical[i] < min) min = historical[i];
+        if (historical[i] > max) max = historical[i];
     }
     
     var dx = historical.length; // 1st to 52nd week time axis (52-1)
     var dy = max - min;
-    var chart_height = 70; // px
-    var chart_width = 180; // px
+    var chart_height = 100; // px
+    var chart_width = 300; // px
     var safety_limit = 5; // px
     var x_step = (chart_width-safety_limit)/dx;
     var y_step = (chart_height-safety_limit)/dy;
@@ -21,9 +21,9 @@ function generateCoords(historical) {
         y2 = 0,
         coords = [];
     for (var i = 0; i < historical.length - 1; i++) {
-        y1 = (max - historical[i].price) * y_step;
+        y1 = (max - historical[i]) * y_step;
         x2 = x2 + x_step;
-        y2 = (max - historical[i + 1].price) * y_step;
+        y2 = (max - historical[i + 1]) * y_step;
         coords[i] = {
             x1: x1,
             y1: y1,

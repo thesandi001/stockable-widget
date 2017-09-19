@@ -1583,11 +1583,43 @@ angular.module('app').controller('todoCtrl', function ($scope, $http, todoStorag
     $scope.widgetUrl = '';
     $scope.currentList = [];
     $scope.loading = false;
+    
     var refreshRate = 3; // in seconds
+    var defaultPeriod = 'months';
+    var defaultValue = 3;
 
-    var getInfoAndHistoricalUrl = 'https://api.smallcase.com/external/market/stocks/getInfoAndHistorical?hash=eac17ca1ac7985c97bb859df011dba4d4682dff937e23468de308672238beced&broker=kite&timestamp=1505479660000&ticker=';
+    var niftyUrl = 'https://www.google.co.in/async/finance_price_updates?ei=p0XBWarZFYn_vgSzwJToDg&yv=2&async=lang:en,country:in,rmids:%2Fm%2F04t5sp,_fmt:jspb';
+    var stockUrl = 'https://www.screener.in/api/company/';
+    var stockPriceHistoryUrl = 'https://www.screener.in/api/company/XXXX/prices/?what=PERIOD&period=VALUE';
     var livePriceUrl = 'http://finance.google.com/finance/info?q=NSE:';
     var createBasketUrl = 'https://www.smallcase.com/create?';
+
+    function getStockPriceHistoryUrl(id,period,value) {
+        var url = stockPriceHistoryUrl;
+        url = url.replace("XXXX", id);
+        url = url.replace("PERIOD", period);
+        url = url.replace("VALUE", value);
+        return url;
+    }
+
+    $scope.changeTimePeriod = function(id,period,value) {
+        $scope.chartPeriod = period;
+        $scope.chartValue = value;
+        var url = getStockPriceHistoryUrl(id,period,value);
+        var config = {};
+        var chartEl = document.getElementById('chart');
+        chartEl.innerHTML = "";
+        $http.get(url, config).then(function(response) {            
+            if(response.status == 200) {
+                $scope.widgetSrc.warehouse_set.period_return = (response.data.prices[response.data.prices.length-1]/response.data.prices[0]-1)*100;
+                $scope.widgetSrc.warehouse_set.period_low = Math.min(...response.data.prices);
+                $scope.widgetSrc.warehouse_set.period_high = Math.max(...response.data.prices);
+                var svgImage = generateSVG(generateCoords(response.data.prices));
+                chartEl.innerHTML = svgImage;
+            }            
+        }, function(error) {            
+        });
+    }
 
     $scope.addToBasket = function() {        
         var query = '';        
@@ -1675,33 +1707,27 @@ angular.module('app').controller('todoCtrl', function ($scope, $http, todoStorag
         value = value.toUpperCase();
         $scope.loadValue = value;        
 
-        var url = getInfoAndHistoricalUrl + value.replace('&','%26');
+        var url = stockUrl + value;
         var config = {};
         $scope.widgetSrc = '';
 
-        $http.get(url, config).then(function(response) {            
+        $http.get(url, config).then(function(response) {
             $scope.loading = false;
-            $scope.widgetSrc = Object.values(response.data.data)[0];
-            if(!$scope.isPresent(value)) {
-                todoStorage.add(value,dictionaryNames[value]);
-                todoStorage.sync();                
-            }
-            $scope.storeWidgetResponse(value,$scope.widgetSrc.sid);
-            $scope.loadLive(value);
-            var chartEl = document.getElementById('chart');
-            var svgImage = generateSVG(generateCoords($scope.widgetSrc.historical));
-            chartEl.innerHTML = svgImage;
-            if($scope.widgetSrc.stock.info.description.length > 120) {
-                $scope.widgetSrc.stock.info.descriptionLengthExceeded = true;
-                $scope.widgetSrc.stock.info.descriptionCopy = $scope.widgetSrc.stock.info.description;
-                $scope.widgetSrc.stock.info.description = $scope.widgetSrc.stock.info.description.substr(0,120)+'..';
-            } else {
-                $scope.widgetSrc.stock.info.descriptionLengthExceeded = false;
-            }            
+            if(response.status == 200) {
+                $scope.widgetSrc = response.data;
+                $scope.changeTimePeriod(response.data.id,defaultPeriod,defaultValue);
+                if(!$scope.isPresent(value)) {
+                    todoStorage.add(value,dictionaryNames[value]);
+                    todoStorage.sync();                
+                }
+            } else {                
+                $scope.widgetError = error.data.detail;
+            }        
+            // $scope.loadLive(value);                    
         }, function(error) {
             $scope.loading = false;
-            $scope.widgetError = error.data.errors[0];            
-        });        
+            $scope.widgetError = error.data.detail;
+        });
     }
 
     $scope.loadLive = function(value) {
@@ -1719,29 +1745,31 @@ angular.module('app').controller('todoCtrl', function ($scope, $http, todoStorag
         }, function(error) {});        
     }
 
+    // setInterval(function() {
+    //     if($scope.loadValue) $scope.loadLive($scope.loadValue);
+    // }, refreshRate*1000);
+
     $scope.loadLiveNifty = function() {
 
-        var url = livePriceUrl + 'NIFTY%2050';
+        var url = niftyUrl;
         var config = {};        
         $http.get(url, config).then(function(response) {
-            var res = JSON.parse(response.data.substring(3))[0];
+            var res = response.data.PriceUpdates[0][0][1];
             $scope.nifty = {};
             $scope.nifty.live = {
-                price: res.l.replace(',',''),
-                pnl: res.c_fix.replace(',',''),
-                pnl_percent: res.cp.replace(',',''),
-                last_close: res.pcls_fix.replace(',','')
+                price: res[8][1],
+                pnl: res[9][1],
+                pnl_percent: res[10][1],
+                last_close: res[8][1]-res[9][1]
             };            
         }, function(error) {});        
     }
 
-    setInterval(function() {
-        if($scope.loadValue) $scope.loadLive($scope.loadValue);
-    }, refreshRate*1000);
+    $scope.loadLiveNifty();
 
     setInterval(function() {
         $scope.loadLiveNifty();        
-    }, 1000);
+    }, 10000);
 
     $scope.readMore = function() {
         $scope.widgetSrc.stock.info.description = $scope.widgetSrc.stock.info.descriptionCopy;
